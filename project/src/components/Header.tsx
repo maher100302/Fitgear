@@ -10,7 +10,21 @@ export const Header: React.FC<HeaderProps> = ({ onCartClick }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { itemCount } = useCart();
 
-  const navItems = ['Home', 'Products', 'Categories', 'About', 'Contact'];
+  const navItems = [
+    { name: 'Home', id: 'home' },
+    { name: 'Products', id: 'products' },
+    { name: 'Categories', id: 'categories' },
+    { name: 'About', id: 'about' },
+    { name: 'Contact', id: 'contact' }
+  ];
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
 
   return (
     <header className="bg-white shadow-lg sticky top-0 z-50">
@@ -25,13 +39,13 @@ export const Header: React.FC<HeaderProps> = ({ onCartClick }) => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <a
-                key={item}
-                href="#"
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
                 className="text-gray-700 hover:text-red-600 font-medium transition-colors duration-200"
               >
-                {item}
-              </a>
+                {item.name}
+              </button>
             ))}
           </nav>
 
@@ -81,13 +95,13 @@ export const Header: React.FC<HeaderProps> = ({ onCartClick }) => {
         <div className="md:hidden bg-white border-t border-gray-200">
           <div className="px-4 py-2 space-y-1">
             {navItems.map((item) => (
-              <a
-                key={item}
-                href="#"
-                className="block px-3 py-2 text-gray-700 hover:text-red-600 font-medium"
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className="w-full text-left px-3 py-2 text-gray-700 hover:text-red-600 font-medium"
               >
-                {item}
-              </a>
+                {item.name}
+              </button>
             ))}
             
             {/* Mobile Search */}
